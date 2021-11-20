@@ -4,7 +4,7 @@ export class Hero {
   constructor() {
     this.element = document.querySelector('.hero');
     this.moveX = 0;
-    this.speed = 16;
+    this.speed = 10;
     this.direction = 'right';
   }
 
@@ -47,7 +47,11 @@ export class Hero {
     } else if (key.keyDown['left']) {
       this.handleClass();
       this.element.classList.add('flip');
-      this.moveX = this.moveX - this.speed;
+      if (this.moveX <= 0) {
+        this.moveX = 0;
+      } else {
+        this.moveX = this.moveX - this.speed;
+      }
       this.direction = key.keyValue['ArrowLeft'];
       this.handleMove();
     }
@@ -93,7 +97,7 @@ class Bullet extends Hero {
   }
   init() {
     this.bulletDirection = hero.getHeroDirection() === 'left' ? 'left' : 'right';
-    this.x = hero.getHeroMoveX() + hero.size().width / 2;
+    this.x = this.bulletDirection === 'right' ? hero.getHeroMoveX() + hero.size().width / 2 : hero.getHeroMoveX() - hero.size().width / 2;
     this.y = (hero.Postion().bottom - hero.size().height) / 2;
     this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
     this.parentNode.appendChild(this.element);
