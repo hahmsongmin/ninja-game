@@ -1,6 +1,6 @@
 import { Hero } from './class.js';
 
-let hero;
+export let hero;
 
 export const key = {
   keyDown: {},
@@ -12,8 +12,15 @@ export const key = {
   },
 };
 
+// 이 배열에 모든 수리검 관리
+export const bulletComProp = {
+  arr: [],
+  launch: false,
+  index: getIn
+};
+
 export const gameProp = {
-  screenWidth: window.innerHeight,
+  screenWidth: window.innerWidth,
   screenHight: window.innerHeight,
 };
 
@@ -22,6 +29,10 @@ export const gameProp = {
 // 60 frame, 재귀호출하면서 상태체크하며 움직임값 변경
 const renderGame = () => {
   hero.keyDownMotion();
+
+  bulletComProp.arr.forEach((arr, index) => {
+    arr.moveBullet(index);
+  });
   window.requestAnimationFrame(renderGame);
 };
 
@@ -30,7 +41,6 @@ const init = () => {
   loadImg();
   windowEvent();
   renderGame();
-  console.log(hero.heroGetPostion());
 };
 
 // 모든 콘텐츠(images, script, css, etc)가 로드된 후 실행
