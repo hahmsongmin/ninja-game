@@ -5,6 +5,7 @@ export class Hero {
     this.element = document.querySelector('.hero');
     this.moveX = 0;
     this.speed = 16;
+    this.direction = 'right';
   }
 
   handleClass() {
@@ -33,11 +34,13 @@ export class Hero {
       this.handleClass();
       this.element.classList.remove('flip');
       this.moveX = this.moveX + this.speed;
+      this.direction = key.keyValue['ArrowRight'];
       this.handleMove();
     } else if (key.keyDown['left']) {
       this.handleClass();
       this.element.classList.add('flip');
       this.moveX = this.moveX - this.speed;
+      this.direction = key.keyValue['ArrowLeft'];
       this.handleMove();
     }
     if (key.keyDown['attack']) {
@@ -77,18 +80,26 @@ class Bullet extends Hero {
     this.y = 0;
     this.moveX = 0;
     this.speed = 30;
+    this.bulletDirection = 'right';
     this.init();
   }
   init() {
-    this.x = hero.Postion().left + hero.size().width;
+    this.bulletDirection = hero.getHeroDirection() === 'left' ? 'left' : 'right';
+    this.x = hero.Postion().left + hero.size().width / 2;
     this.y = (hero.Postion().bottom - hero.size().height) / 2;
     this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
     this.parentNode.appendChild(this.element);
     this.moveX = this.x;
   }
   moveBullet() {
-    this.moveX += this.speed;
-    this.element.style.transform = `translate(${this.moveX}px, ${this.y}px)`;
+    let setRotate = '';
+    if (this.bulletDirection === 'left') {
+      this.moveX -= this.speed;
+      setRotate = `rotate(180deg)`;
+    } else {
+      this.moveX += this.speed;
+    }
+    this.element.style.transform = `translate(${this.moveX}px, ${this.y}px) ${setRotate}`;
     this.crashBullet();
   }
 
