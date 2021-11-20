@@ -18,6 +18,10 @@ export const bulletComProp = {
   launch: false,
 };
 
+export const gameBackground = {
+  gameBox: document.querySelector('.game'),
+};
+
 export const gameProp = {
   screenWidth: window.innerWidth,
   screenHight: window.innerHeight,
@@ -28,10 +32,17 @@ export const gameProp = {
 // 60 frame, 재귀호출하면서 상태체크하며 움직임값 변경
 const renderGame = () => {
   hero.keyDownMotion();
+  setGameBackground();
   bulletComProp.arr.forEach((arr) => {
     arr.moveBullet();
   });
   window.requestAnimationFrame(renderGame);
+};
+
+// 페럴럭스 (배경도 계속 이동 필요) , 히어로가 이동한 만큼
+const setGameBackground = () => {
+  let parallaxValue = Math.min(0, (hero.getHeroMoveX() - gameProp.screenWidth / 3) * -1);
+  gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
 };
 
 const init = () => {
@@ -54,6 +65,10 @@ const windowEvent = () => {
   window.addEventListener('keyup', (e) => {
     key.keyDown[key.keyValue[e.code]] = false;
     hero.keyUpMotion();
+  });
+  window.addEventListener('resize', (e) => {
+    gameProp.screenWidth = window.innerWidth;
+    gameProp.screenHight = window.innerHeight;
   });
 };
 

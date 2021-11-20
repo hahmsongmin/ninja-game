@@ -1,5 +1,6 @@
 .game_app {
   position: relative;
+  overflow: hidden;
   height: 100vh;
 }
 
@@ -8,9 +9,23 @@
   left: 0;
   bottom: 0;
   z-index: 10;
+  width: 70000px;
+  height: 100%;
+  background-image: url('../../../lib/images/bg_bottom.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+.game_app .sky {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background-image: url('../../../lib/images/bg_top.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
 }
 
 @keyframes hero_idle {
@@ -18,7 +33,7 @@
     background-position-x: 0px;
   }
   to {
-    background-position-x: -3770px;
+    background-position-x: -1498px;
   }
 }
 
@@ -27,7 +42,7 @@
     background-position-x: 0px;
   }
   to {
-    background-position-x: -3770px;
+    background-position-x: -1498px;
   }
 }
 
@@ -36,7 +51,7 @@
     background-position-x: 0px;
   }
   to {
-    background-position-x: -3770px;
+    background-position-x: -1498px;
   }
 }
 
@@ -45,14 +60,14 @@
   left: 0;
   bottom: 0;
   z-index: 100;
-  width: 377px;
-  height: 458px;
+  width: 150px;
+  height: 182px;
 }
 
 .hero_box .hero {
   height: 100%;
   background-image: url('../../../lib/images/ninja_idle.png');
-  background-size: 3770px 458px;
+  background-size: 1498px 182px;
   animation: hero_idle 0.7s infinite steps(10);
 }
 
@@ -63,14 +78,14 @@
 .hero_box .run {
   height: 100%;
   background-image: url('../../../lib/images/ninja_run.png');
-  background-size: 3770px 458px;
+  background-size: 1498px 182px;
   animation: hero_run 0.7s infinite steps(10);
 }
 
 .hero_box .attack {
   height: 100%;
   background-image: url('../../../lib/images/ninja_attack.png');
-  background-size: 3770px 458px;
+  background-size: 1498px 182px;
   animation: hero_attack 0.7s infinite steps(1);
 }
 
@@ -79,8 +94,8 @@
   left: 0;
   bottom: 0;
   z-index: 90;
-  width: 160px;
-  height: 32px;
+  width: 120px;
+  height: 24px;
   background-image: url('../../../lib/images/hero_bullet.png');
   background-size: cover;
   background-repeat: no-repeat;

@@ -8,6 +8,14 @@ export class Hero {
     this.direction = 'right';
   }
 
+  getHeroDirection() {
+    return this.direction;
+  }
+
+  getHeroMoveX() {
+    return this.moveX;
+  }
+
   handleClass() {
     this.element.classList.add('run');
   }
@@ -85,7 +93,7 @@ class Bullet extends Hero {
   }
   init() {
     this.bulletDirection = hero.getHeroDirection() === 'left' ? 'left' : 'right';
-    this.x = hero.Postion().left + hero.size().width / 2;
+    this.x = hero.getHeroMoveX() + hero.size().width / 2;
     this.y = (hero.Postion().bottom - hero.size().height) / 2;
     this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
     this.parentNode.appendChild(this.element);
