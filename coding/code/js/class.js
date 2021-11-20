@@ -1,8 +1,8 @@
 import { hero, key, gameProp, bulletComProp } from './game.js';
 
 export class Hero {
-  constructor(el) {
-    this.element = document.querySelector(el);
+  constructor() {
+    this.element = document.querySelector('.hero');
     this.moveX = 0;
     this.speed = 16;
   }
@@ -18,7 +18,7 @@ export class Hero {
   // 화면 크기에 따른 기준을 잡는게 필요(위 또는 아래로)
   // 아래기준
   // 수리검 위치 잡을때 사용 예정
-  heroGetPostion() {
+  Postion() {
     const position = this.element.getBoundingClientRect();
     return {
       left: position.left,
@@ -67,8 +67,9 @@ export class Hero {
   }
 }
 
-class Bullet {
+class Bullet extends Hero {
   constructor() {
+    super();
     this.parentNode = document.querySelector('.game');
     this.element = document.createElement('div');
     this.element.className = 'hero_bullet';
@@ -79,17 +80,22 @@ class Bullet {
     this.init();
   }
   init() {
-    this.x = hero.heroGetPostion().left + hero.size().width;
-    this.y = (hero.heroGetPostion().bottom - hero.size().height) / 2;
+    this.x = hero.Postion().left + hero.size().width;
+    this.y = (hero.Postion().bottom - hero.size().height) / 2;
     this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
     this.parentNode.appendChild(this.element);
     this.moveX = this.x;
   }
   moveBullet() {
     this.moveX += this.speed;
-    if (gameProp.screenWidth < this.moveX) {
-      return;
-    }
     this.element.style.transform = `translate(${this.moveX}px, ${this.y}px)`;
+    this.crashBullet();
+  }
+
+  crashBullet() {
+    const position = super.Postion();
+    if (position.left > gameProp.screenWidth || position.right < 0) {
+      this.element.remove();
+    }
   }
 }

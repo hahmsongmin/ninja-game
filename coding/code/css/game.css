@@ -71,7 +71,7 @@
   height: 100%;
   background-image: url('../../../lib/images/ninja_attack.png');
   background-size: 3770px 458px;
-  animation: hero_attack 0.7s infinite steps(10);
+  animation: hero_attack 0.7s infinite steps(1);
 }
 
 .hero_bullet {

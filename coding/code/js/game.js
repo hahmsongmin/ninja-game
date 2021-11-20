@@ -16,7 +16,6 @@ export const key = {
 export const bulletComProp = {
   arr: [],
   launch: false,
-  index: getIn
 };
 
 export const gameProp = {
@@ -29,15 +28,14 @@ export const gameProp = {
 // 60 frame, 재귀호출하면서 상태체크하며 움직임값 변경
 const renderGame = () => {
   hero.keyDownMotion();
-
-  bulletComProp.arr.forEach((arr, index) => {
-    arr.moveBullet(index);
+  bulletComProp.arr.forEach((arr) => {
+    arr.moveBullet();
   });
   window.requestAnimationFrame(renderGame);
 };
 
 const init = () => {
-  hero = new Hero('.hero');
+  hero = new Hero();
   loadImg();
   windowEvent();
   renderGame();
