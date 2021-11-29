@@ -1,4 +1,4 @@
-import { hero, key, gameProp, bulletComProp } from './game.js';
+import { hero, key, gameProp, bulletComProp, monster } from './game.js';
 
 export class Hero {
   constructor() {
@@ -115,25 +115,41 @@ class Bullet extends Hero {
     this.crashBullet();
   }
 
+  removeBullet() {
+    for (let i = 0; i < bulletComProp.arr.length; i++) {
+      if (bulletComProp.arr[i] === this) {
+        bulletComProp.arr.splice(i, 1);
+        this.element.remove();
+      }
+    }
+  }
+
   crashBullet() {
     const position = super.Postion();
+    if (this.Postion().left > monster.getPosition().left && this.Postion().right < monster.getPosition().right) {
+      this.removeBullet();
+    }
     if (position.left > gameProp.screenWidth || position.right < 0) {
-      this.element.remove();
+      this.removeBullet();
     }
   }
 }
 
-export class Monster {
+export class Monster extends Hero {
   constructor() {
+    super();
     this.parentNode = document.querySelector('.game');
-    this.el = document.createElement('div');
-    this.el.className = 'monster_box';
+    this.element = document.createElement('div');
+    this.element.className = 'monster_box';
     this.elChildren = document.createElement('div');
     this.elChildren.className = 'monster';
     this.init();
   }
   init() {
-    this.el.appendChild(this.elChildren);
-    this.parentNode.appendChild(this.el);
+    this.element.appendChild(this.elChildren);
+    this.parentNode.appendChild(this.element);
+  }
+  getPosition() {
+    return this.Postion();
   }
 }
