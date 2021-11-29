@@ -1,6 +1,7 @@
-import { Hero } from './class.js';
+import { Hero, Monster } from './class.js';
 
 export let hero;
+export let monster;
 
 export const key = {
   keyDown: {},
@@ -47,6 +48,7 @@ const setGameBackground = () => {
 
 const init = () => {
   hero = new Hero();
+  monster = new Monster();
   loadImg();
   windowEvent();
   renderGame();
