@@ -131,3 +131,14 @@
   background-size: 2242px 294px;
   animation: monster_run 1s infinite steps(8);
 }
+
+.monster_box .hp {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  font-size: 110px;
+  color: #fff;
+  text-align: center;
+  transform: translateY(-80%);
+}

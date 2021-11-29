@@ -13,6 +13,14 @@ export const key = {
   },
 };
 
+// 이 배열에 모든 몬스터 관리
+export const allMonsterComProp = {
+  monster1: {
+    hp: 3000,
+  },
+  arr: [],
+};
+
 // 이 배열에 모든 수리검 관리
 export const bulletComProp = {
   arr: [],
@@ -46,9 +54,23 @@ const setGameBackground = () => {
   gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
 };
 
+const HowWillCreateMonster1 = (MonsterCounter) => {
+  let randomPositionX;
+  for (let i = 0; i < MonsterCounter; i++) {
+    while (true) {
+      randomPositionX = Math.random() * 1000;
+      if (randomPositionX > 200) {
+        break;
+      }
+    }
+    monster = new Monster(randomPositionX, allMonsterComProp.monster1.hp);
+    allMonsterComProp.arr.push(monster);
+  }
+};
+
 const init = () => {
   hero = new Hero();
-  monster = new Monster();
+  HowWillCreateMonster1(3);
   loadImg();
   windowEvent();
   renderGame();

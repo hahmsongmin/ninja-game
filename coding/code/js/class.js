@@ -1,4 +1,4 @@
-import { hero, key, gameProp, bulletComProp, monster } from './game.js';
+import { hero, key, gameProp, bulletComProp, monster, allMonsterComProp } from './game.js';
 
 export class Hero {
   constructor() {
@@ -6,6 +6,7 @@ export class Hero {
     this.moveX = 0;
     this.speed = 10;
     this.direction = 'right';
+    this.attackDamage = 1000;
   }
 
   getHeroDirection() {
@@ -125,31 +126,56 @@ class Bullet extends Hero {
   }
 
   crashBullet() {
-    const position = super.Postion();
-    if (this.Postion().left > monster.getPosition().left && this.Postion().right < monster.getPosition().right) {
-      this.removeBullet();
-    }
-    if (position.left > gameProp.screenWidth || position.right < 0) {
-      this.removeBullet();
+    const position = this.Postion();
+    for (let k = 0; k < allMonsterComProp.arr.length; k++) {
+      if (this.Postion().left > allMonsterComProp.arr[k].getPosition().left && this.Postion().right < allMonsterComProp.arr[k].getPosition().right) {
+        this.removeBullet();
+        allMonsterComProp.arr[k].updateHp();
+      }
+      if (position.left > gameProp.screenWidth || position.right < 0) {
+        this.removeBullet();
+      }
     }
   }
 }
 
 export class Monster extends Hero {
-  constructor() {
+  constructor(positionX, hp = 1000) {
     super();
     this.parentNode = document.querySelector('.game');
-    this.element = document.createElement('div');
+    this.element = this.createEl('div');
     this.element.className = 'monster_box';
-    this.elChildren = document.createElement('div');
+    this.elChildren = this.createEl('div');
     this.elChildren.className = 'monster';
+    this.hpNode = this.createEl('div');
+    this.hpNode.className = 'hp';
+    this.hpValue = hp;
+    this.hpTextNode = document.createTextNode(this.hpValue);
+    this.positionX = positionX;
     this.init();
   }
+  createEl(element) {
+    return document.createElement(element);
+  }
+
   init() {
+    this.hpNode.appendChild(this.hpTextNode);
+    this.element.appendChild(this.hpNode);
     this.element.appendChild(this.elChildren);
     this.parentNode.appendChild(this.element);
+    this.element.style.transform = `translateX(${this.positionX}px)`;
   }
+
   getPosition() {
     return this.Postion();
+  }
+
+  updateHp() {
+    this.hpValue = Math.max(0, this.hpValue - this.attackDamage);
+    if (this.hpValue === 0) {
+      this.element.remove();
+      return;
+    }
+    this.element.children[0].textContent = this.hpValue;
   }
 }
