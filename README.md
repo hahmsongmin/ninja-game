@@ -1,1 +1,2 @@
-# only JavaScript
+##### Vanilla JavaScript
+
